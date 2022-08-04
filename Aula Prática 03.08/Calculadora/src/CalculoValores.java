@@ -17,7 +17,6 @@ public class CalculoValores {
 		int num1 = t.nextInt();
 		System.out.print("Informe o Segundo número: ");
 		int num2 = t.nextInt();
-		
 		int rest = num1 * num2;
 		System.out.println("O resultado é: " + rest);
 				
