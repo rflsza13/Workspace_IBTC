@@ -24,7 +24,7 @@ public class DoisUm {
 			}
 		}
 		
-		//Coletando o valor que cada jogador
+		//Coletando o valor de cada jogador
 		i = 1;
 		do {
 			System.out.print("Informe o valor do " + i + "º jogador(2 ou 1): ");
