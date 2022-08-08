@@ -21,6 +21,7 @@ public class CRUD {
 			i = Integer.parseInt(t.nextLine());
 			switch(i) {
 			case 1:
+				//Cadastrando frutas no ArrayList
 				int j = 0;
 				while (j == 0) {
 					System.out.print("Informe o nome da fruta que deseja adicionar: ");
@@ -56,5 +57,4 @@ public class CRUD {
 		}
 		t.close();
 	}
-
 }
