@@ -1,0 +1,162 @@
+SQL = Linguagem de Consulta Estruturada
+SGBD = Sistema de Gerenciamento de Banco de Dados
+
+Database= É uma área reservada no banco de dados, 
+para armazenar as empresas e os dados dos respectivos clientes.
+
+Tabelas, Campos, Chaves Primárias e Chaves secundárias
+Registros = Tuplas
+
+
+-- Criando uma database para o cliente IBM
+create database ibm;
+
+-- Pondo o nosso DataBase em uso 
+use ibm;
+
+-- Criando uma tabela dentro no Database IBM
+create table clientes(
+id_cliente int not null auto_increment primary key,
+nome_cliente varchar(50) not null,
+email_cliente varchar(80) not null,
+celular char(11) not null);
+
+-- Vendo a estrutura da nossa tabela no DataBase
+describe clientes;
+
+-- Inserindo registros na nossa tabela do banco de dados
+insert into clientes
+(nome_cliente,email_cliente,celular)
+values
+("Filipe Miranda","filipe@ibm.com.br","999149666"),
+("Eliza Pimentel","eliza@ibm.com.br", "988105573"),
+("Fábio Bonfim","fabio@ibm.com.br", "997112314");
+
+insert into clientes
+values
+(null,'Kathleen Ferreira','ferreira@ibm.com.br','999149677');
+
+
+insert into clientes
+values
+(null,'Ricardo Alexandre Bontempo','ricardo.bontempo@ibm.com.br','999149644'),
+(null,'Alexandre Medeiros','alexandre.medeiros@ibm.com.br','977149644');
+-- Fazendo a leitura dos registros em SQL
+select * from clientes;
+select nome_cliente,email_cliente from clientes;
+
+-- Classificando a apresentação da ordem dos registros
+select * from clientes order by nome_cliente desc;
+select * from clientes order by celular asc;
+
+-- Criando filtros dentro de um select em SQL
+select * from clientes where id_cliente=3;
+select * from clientes where id_cliente in(2,3);
+
+use ibm;
+select * from clientes where nome_cliente like "Eliza%";
+select * from clientes where nome_cliente like "%pimentel";
+select * from clientes where nome_cliente like "%alexandre%";
+
+
+-- Contando a quantidade de registros dentro da nossa tabela
+select count(*) as Total_Registros from clientes;
+
+-- Inserindo novos campos na estrutura da nossa tabela
+alter table clientes add idade_cliente int not null;
+-- Modificando o nome de um campo na estrutura da tabela
+alter table clientes rename column celular to celular_cliente;
+
+select * from clientes;
+
+-- Modificando os registros com update
+update clientes set idade_cliente=29 where id_cliente in(11,12);
+
+-- Criando um backup da nossa tabela de produção
+create table clientes_bck select * from clientes;
+
+
+-- Excluindo um campo da nossa tabela
+alter table clientes_bck drop celular;
+
+-- Excluindo uma tabela inteira fisicamente
+drop table clientes_bck;
+
+-- Comando que apaga todos os registros no banco  de dados
+delete from clientes;
+
+-- Como recuperar os dados do backup para a tabela de produção
+insert into clientes
+(id_cliente,nome_cliente,email_cliente,celular,idade_cliente)
+select id_cliente,nome_cliente,email_cliente,celular,idade_cliente from clientes_bck;
+
+
+-- Criar a tabela de produtos
+create table produtos(
+id_produto int not null auto_increment,
+nome_produto varchar(30) not null,
+valor_unitario double(8,2) not null,
+qtd_produto int not null,
+cod_marca int not null,
+primary key(id_produto));
+
+-- Criar a tabela de Marcas
+create table marcas(
+id_marca int not null auto_increment primary key,
+nome_marca varchar(40) not null);
+
+describe produtos;
+describe marcas;
+
+
+use ibm;
+-- Criar a tabela de produtos
+create table produtos(
+id_produto int(8) not null auto_increment,
+nome_produto varchar(30) not null,
+valor_unitario double(8,2) not null,
+qtd_produto int not null,
+cod_marca int not null,
+primary key(id_produto));
+
+-- Criar a tabela de Marcas
+create table marcas(
+id_marca int not null auto_increment primary key,
+nome_marca varchar(40) not null);
+
+describe produtos;
+describe marcas;
+
+insert into produtos
+values
+(null,"Geladeira",2200.99,10,1),
+(null,"Fogao",1800.55,20,1),
+(null,"Celular",1950.99,100,2);
+
+select * from produtos;
+
+insert into marcas
+values
+(null,"Brastemp"),
+(null,"Samsung");
+
+select * from marcas;
+
+-- mostrando registros de duas tabelas com inner join
+select p.id_produto, p.nome_produto, p.valor_unitario, m.id_marca, m.nome_marca
+from 
+produtos as p
+inner join marcas as m
+on(p.cod_marca=m.id_marca);
+
+-- mostrando registros de duas tabelas sem o inner join
+select p.id_produto, p.nome_produto, p.valor_unitario, m.id_marca, m.nome_marca
+from 
+produtos as p,
+marcas as m
+where(p.cod_marca=m.id_marca);
+
+-- calculando campos
+select sum(valor_unitario) as total from produtos;
+-- Calculos entre campos no banco de dados
+select nome_produto,valor_unitario,qtd_produto, (valor_unitario*qtd_produto) as total from produtos;

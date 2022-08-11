@@ -67,9 +67,14 @@ public class Formulario extends JFrame {
 		JButton btn1 = new JButton("Limpar");
 		btn1.setBounds(126, 104, 89, 23);
 		btn1.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				textUsuario.setText("");
-				textSenha.setText("");
+				
+				String usuario = textUsuario.getText();
+				String senha = textSenha.getText();
+				
+				textUsuario.setText(senha);
+				textSenha.setText(usuario);
 			}
 		});
 		contentPane.add(btn1);
